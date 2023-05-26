@@ -94,7 +94,7 @@ int main() {
     return 0;
 }
 void search_template_in_file(string file_out_path, string &str_search,
-                             string * arr_of_lines, int lines){
+									string * arr_of_lines, int lines){
     ofstream file_out;
     file_out.open(file_out_path, ios::out);
 
