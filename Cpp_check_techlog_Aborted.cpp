@@ -12,6 +12,8 @@
 
 //#define FIND_TIMEOUT_TEST
 
+//#define FUTURE_USING
+
 using namespace std;
 
 //"D:\work\_DOCS\Notes\46460\46460_techlog.txt"
@@ -21,9 +23,6 @@ using namespace std;
 
 //C:\Users\Administrator\Documents\Engineering\Software\Cpp_language\Cpp_check_techlog\DKV_Aborted.txt
 
-
-vector<string> DataType;
-
 //string str_to_find_debug_debug = "zka - TechnologySelectCRTDS.cpp [0-9]+: Aborted";
 //string str_to_find_debug = ": Aborted";
 //string str_to_find_debug = "transparent mode";
@@ -31,17 +30,24 @@ vector<string> DataType;
 
 string str_to_find_debug = "Track2:";
 
+
+#ifdef FUTURE_USING
 void search_template_in_file(string file_out_path, string &str_search,
                              string * arr_of_lines, int lines);
 int load_data_in_arr(string f_in_path, string * arr_of_lines, int arr_of_lines_size);
-int load_data_in_map(string f_in_path, map<int, string> &map_of_lines);
 void print_array(string * arr, int arr_size);
+#endif
+
+int load_data_in_map(string f_in_path, map<int, string> &map_of_lines);
 int load_transactions_in_map(map<int, string>  &map_of_lines, map<int, map<int, string> > &transactions);
 bool find_timeout(const string first, const string second);
 
 int main() {
 //    int lines = 0;
-    string search_str, file_in_path, file_out_path, arr_of_lines[MAX_LINES];
+#ifdef FUTURE_USING
+    string search_str, arr_of_lines[MAX_LINES];
+#endif
+    string file_in_path, file_out_path;
     map<int, string> *map_of_lines = new map<int, string>();
     map<int, map<int, string> > *transactions = new map<int, map<int, string> >();
 
@@ -58,8 +64,8 @@ int main() {
         file_in_path = "D:\\work\\_DOCS\\Tickets_log\\53273.txt";
         file_out_path = "Output_file.txt";
 
-        cout<<"Input the file name with path : "<<file_in_path<<endl;
-        cout<<"Input the file name with path : "<<file_out_path<<endl;
+        cout<<"Input file name with path : "<<file_in_path<<endl;
+        cout<<"Output file name with path : "<<file_out_path<<endl;
 
         search_str = str_to_find_debug;
     }
@@ -93,6 +99,8 @@ int main() {
 
     return 0;
 }
+#ifdef FUTURE_USING
+// This function is not used in the current application. Stay here for a future using.
 void search_template_in_file(string file_out_path, string &str_search,
 									string * arr_of_lines, int lines){
     ofstream file_out;
@@ -114,6 +122,7 @@ void search_template_in_file(string file_out_path, string &str_search,
         cout<<j<<endl;
     }
 }
+
 int load_data_in_arr(string f_in_path, string * arr_of_lines, int arr_of_lines_size){
     ifstream file_in;
     file_in.open(f_in_path, ios::in);
@@ -127,12 +136,15 @@ int load_data_in_arr(string f_in_path, string * arr_of_lines, int arr_of_lines_s
     }
     return elements_nr;
 }
+
 void print_array(string * arr, int arr_size){
     cout<<"Print Array"<<endl;
     for(int counter = 0; counter < arr_size; counter++){
         cout<<arr[counter]<<endl;
     }
 }
+#endif
+
 int load_data_in_map(string f_in_path, map<int, string> &map_of_lines){
     ifstream file_in;
     file_in.open(f_in_path, ios::in);
