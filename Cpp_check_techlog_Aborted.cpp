@@ -12,8 +12,6 @@
 
 //#define FIND_TIMEOUT_TEST
 
-//#define FUTURE_USING
-
 using namespace std;
 
 //"D:\work\_DOCS\Notes\46460\46460_techlog.txt"
@@ -30,23 +28,12 @@ using namespace std;
 
 string str_to_find_debug = "Track2:";
 
-
-#ifdef FUTURE_USING
-void search_template_in_file(string file_out_path, string &str_search,
-                             string * arr_of_lines, int lines);
-int load_data_in_arr(string f_in_path, string * arr_of_lines, int arr_of_lines_size);
-void print_array(string * arr, int arr_size);
-#endif
-
 int load_data_in_map(string f_in_path, map<int, string> &map_of_lines);
 int load_transactions_in_map(map<int, string>  &map_of_lines, map<int, map<int, string> > &transactions);
 bool find_timeout(const string first, const string second);
 
 int main() {
-//    int lines = 0;
-#ifdef FUTURE_USING
-    string search_str, arr_of_lines[MAX_LINES];
-#endif
+
     string file_in_path, file_out_path;
     map<int, string> *map_of_lines = new map<int, string>();
     map<int, map<int, string> > *transactions = new map<int, map<int, string> >();
@@ -60,7 +47,6 @@ int main() {
 #endif
 
     if(DEBUG){
-//        file_in_path = "C:\\Users\\Administrator\\Documents\\Engineering\\Software\\Cpp_language\\Cpp_check_techlog\\ZPD01008.txt";
         file_in_path = "D:\\work\\_DOCS\\Tickets_log\\53273.txt";
         file_out_path = "Output_file.txt";
 
@@ -79,71 +65,12 @@ int main() {
         cin>>search_str;
     }
 
-//    lines = load_data_in_arr(file_in_path, arr_of_lines, MAX_LINES);
-//
-//    print_array(arr_of_lines, lines);
-
     load_data_in_map(file_in_path, *map_of_lines);
 
     load_transactions_in_map(*map_of_lines, *transactions);
 
-//    for(map<int, string>::iterator i = map_of_lines->begin(); i != map_of_lines->end(); i++){
-////        file_out<<j<<endl;
-//        cout<<i->first<<" : "<<i->second<<endl;
-//
-//    }
-//    search_template_in_file(file_out_path, search_str, arr_of_lines, lines);
-
-//    if (regex_match ("softwareTesting", regex("(soft)(.*)") ))
-//      cout << "string:literal => matched\n";
-
     return 0;
 }
-#ifdef FUTURE_USING
-// This function is not used in the current application. Stay here for a future using.
-void search_template_in_file(string file_out_path, string &str_search,
-									string * arr_of_lines, int lines){
-    ofstream file_out;
-    file_out.open(file_out_path, ios::out);
-
-    vector<string> data;
-//    string str_line, arr_of_lines[MAX_LINES];
-
-    for (int counter = 0; counter < lines; counter++){
-        size_t found = arr_of_lines[counter].find(str_search);
-        if(found != string::npos){
-            data.push_back(arr_of_lines[counter]);
-//            cout<<arr_of_lines[counter]<<endl;
-        }
-    }
-    cout<<"We search : "<<str_search<<endl;
-    for(auto j:data){
-        file_out<<j<<endl;
-        cout<<j<<endl;
-    }
-}
-
-int load_data_in_arr(string f_in_path, string * arr_of_lines, int arr_of_lines_size){
-    ifstream file_in;
-    file_in.open(f_in_path, ios::in);
-    string str_line;
-
-    int elements_nr=0;
-    while(!file_in.eof()) {
-        getline(file_in, str_line);
-        arr_of_lines[elements_nr]=str_line;
-        elements_nr++;
-    }
-    return elements_nr;
-}
-
-void print_array(string * arr, int arr_size){
-    cout<<"Print Array"<<endl;
-    for(int counter = 0; counter < arr_size; counter++){
-        cout<<arr[counter]<<endl;
-    }
-}
-#endif
 
 int load_data_in_map(string f_in_path, map<int, string> &map_of_lines){
     ifstream file_in;
@@ -158,6 +85,7 @@ int load_data_in_map(string f_in_path, map<int, string> &map_of_lines){
     }
     return elements_nr;
 }
+
 int load_transactions_in_map(map<int, string>  &map_of_lines, map<int, map<int, string> > &transactions){
     int transaction_nr = 0;
 //    string str_search = ":0601";
@@ -169,8 +97,6 @@ int load_transactions_in_map(map<int, string>  &map_of_lines, map<int, map<int, 
     for(map<int, string>::iterator i = map_of_lines.begin(),
         prev = map_of_lines.end(); i != map_of_lines.end(); prev = i, ++i){
 
-//        size_t found = i->second.find(str_search);
-//        if(found != string::npos){
         if(i->second.find(str_search)!= string::npos){
 //            cout<<"-----------------------------------------------------------------------"<<endl;
             if(!(prev->second.find(key_stop) != string::npos)){
@@ -191,6 +117,7 @@ int load_transactions_in_map(map<int, string>  &map_of_lines, map<int, map<int, 
 
     return 0;
 }
+
 bool find_timeout(const string first, const string second){
     string hours_1, hours_2, minutes_1, minutes_2, seconds_1, seconds_2, result;
     result = second.substr(14, 5);
